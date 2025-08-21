@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h> 
-#include <signal.h> 
+#include <unistd.h>  
+#include <signal.h>
+
 void signal_handler(int sig){
     if (sig == SIGHUP) {
-        printf("\nOuch!\n");
+        printf("Ouch!");
     } else if (sig == SIGINT) {
-        printf("\nYeah!\n");
+        printf("Yeah!");
     }
 }
 
