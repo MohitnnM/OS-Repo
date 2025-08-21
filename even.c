@@ -5,12 +5,10 @@
 #include <signal.h> 
 void signal_handler(int sig){
     if (sig == SIGHUP) {
-        printf("\nSIGHUP received!\n");
+        printf("\nOuch!\n");
     } else if (sig == SIGINT) {
-        printf("\nSIGINT received!\n");
+        printf("\nYeah!\n");
     }
-    printf("\nOuch!\n");
-    printf("\nYeah!\n");
 }
 
 int main(int arg, char *argv[]) {
