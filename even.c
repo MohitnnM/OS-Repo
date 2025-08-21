@@ -3,21 +3,18 @@
 #include <sys/types.h> 
 #include <signal.h> 
 void hup_handler(int sig){
-    printf("\n Ouch! \n");
+    printf("Ouch!\n");
 }
 
 void int_handler(int sig){
-    printf("\n Yeah! \n");
+    printf("\nYeah!\n");
 }
 
-int main(void) {
-    int n;
-    
-    printf("Enter a number: ");
-    scanf("%d", &n);
-
+int main(int arg, char *argv[]) {
     signal(SIGHUP, hup_handler);
     signal(SIGINT, int_handler);
+
+    int n = atoi(argv[1]);
 
     for (int i = 0; i < n; i++) {
         if (i % 2 == 0) {
