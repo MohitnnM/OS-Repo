@@ -3,11 +3,11 @@
 #include <sys/types.h> 
 #include <signal.h> 
 void hup_handler(int sig){
-    printf("Ouch!\n");
+    printf("\nOuch!\n");
 }
 
 void int_handler(int sig){
-    printf("Yeah!\n");
+    printf("\nYeah!\n");
 }
 
 int main(void) {
