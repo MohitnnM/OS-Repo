@@ -1,11 +1,23 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <sys/types.h> 
+#include <signal.h> 
+void hup_handler(int sig){
+    printf("Ouch!\n");
+}
+
+void int_handler(int sig){
+    printf("Yeah!\n");
+}
 
 int main(void) {
     int n;
-
+    
     printf("Enter a number: ");
     scanf("%d", &n);
+
+    signal(SIGHUP, hup_handler);
+    signal(SIGINT, int_handler);
 
     for (int i = 0; i < n; i++) {
         if (i % 2 == 0) {
@@ -16,3 +28,4 @@ int main(void) {
 
     return 0;
 }
+
