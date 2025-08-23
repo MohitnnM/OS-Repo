@@ -56,11 +56,11 @@ int main(int argk, char *argv[], char *envp[]) {
     if (strcmp(v[0],"cd") == 0)
     {
       if(v[1] == NULL){
-        perror("cd: argument is missing");
+        perror("");
       }
       else{
         if(chdir(v[1]) != 0){
-          perror("cd: directory not found");
+          perror("");
         }
       }
       continue;
