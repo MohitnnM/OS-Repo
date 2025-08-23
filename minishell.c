@@ -53,19 +53,37 @@ int main(int argk, char *argv[], char *envp[]) {
       }
     }
     /* assert i is number of tokens + 1 */
+    if (strcmp(v[0],"cd") == 0)
+    {
+      if(v[1] == NULL){
+        perror("cd: argument is missing");
+      }
+      else{
+        if(chdir(v[1]) != 0){
+          perror("cd: directory not found");
+        }
+      }
+      continue;
+    }
     /* fork a child process to exec the command in v[0] */
     switch (frkRtnVal = fork()) {
       case -1: /* fork returns error to parent process */
       {
-        break;
+        perror("Error found");
+        continue;
       }
       case 0: /* code executed only by child process */
       {
         execvp(v[0], v);
+        perror("Child process");
+        exit(1);
       }
       default: /* code executed only by parent process */
       {
-        wait(0);
+        int stat;
+        if (wait(&stat) == -1){
+          perror("Parent process wait");
+        }
         // REMOVE PRINTF STATEMENT BEFORE SUBMISSION
         printf("%s done \n", v[0]);
         break;
