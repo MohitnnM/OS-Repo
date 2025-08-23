@@ -21,7 +21,6 @@ shell prompt
 */
 void prompt(void) {
   // ## REMOVE THIS 'fprintf' STATEMENT BEFORE SUBMISSION
-  fprintf(stdout, "\n msh> ");
   fflush(stdout);
 }
 /* argk - number of arguments */
@@ -85,7 +84,6 @@ int main(int argk, char *argv[], char *envp[]) {
           perror("Parent process wait");
         }
         // REMOVE PRINTF STATEMENT BEFORE SUBMISSION
-        printf("%s done \n", v[0]);
         break;
       }
     } /* switch */
