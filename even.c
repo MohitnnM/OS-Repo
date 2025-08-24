@@ -1,3 +1,15 @@
+/*
+Module: Even.c
+Purpose:
+This program takes in an integer input, 'n' from the command line, and print the first n even numbers, with a 5 second pause between each output to alow the time for signals to be recieved. 
+If a SIGHUP is recivedm typically given when a program is to be terminated then the module will modify the signal so that it instead prints "Ouch!". SImilarly if a SIGINT is recieved, typically
+when the copy keyboard shortcut Ctrl+C is used to interrupt the program, the module will modify the signal so that it instead prints "Yeah!".
+Changes:
+The only major changes required for this was to change all printf statements to write functions instead as write is a low-level function and it is async-signal safe.
+Author: Mohit Mittal (a1885648)
+Date: August 2025
+*/
+
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
