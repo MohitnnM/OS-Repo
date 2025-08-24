@@ -108,7 +108,6 @@ int main(int argk, char *argv[], char *envp[]) {
       /* continue to skip fork*/
       continue;
     }
-    int stat;
     /* fork a child process to exec the command in v[0] */
     switch (frkRtnVal = fork()) {
       case -1: /* fork returns error to parent process */
@@ -127,7 +126,6 @@ int main(int argk, char *argv[], char *envp[]) {
         int stat;
         if (background_tasks == 0) {
           waitpid(frkRtnVal, &stat, 0);
-          perror("waitpid");
         } else if (background_tasks == 1) {
           bg_jobs[num_jobs].job_id = num_jobs + 1;
           bg_jobs[num_jobs].pid_num = frkRtnVal;
