@@ -24,25 +24,47 @@ struct background_jobs {
   int job_status;
 };
 
+struct background_jobs bg_jobs[NV]; /* an array to store all background jobs until done */
+int num_jobs = 0; /* number of background jobs */
+
+void sig_handler(int sig)
+{
+  int stat;
+  pid_t job_finished;
+    while ((job_finished = waitpid(-1, &stat, WNOHANG)) > 0) {
+      for (int j = 0; j < num_jobs; ++j) {
+        if (bg_jobs[j].pid_num == job_finished) {
+          bg_jobs[j].job_status = 0;
+          printf("[%d]+ Done                 %s\n", bg_jobs[j].job_id, bg_jobs[j].cmd);
+          fflush(stdout);
+
+          for (int k = j; k < num_jobs - 1; ++k) {
+            bg_jobs[k] = bg_jobs[k + 1];
+          }
+          num_jobs--;
+          break;
+        }
+      }
+    }
+}  
 /* shell prompt */
 void prompt(void) {
   // ## REMOVE THIS 'fprintf' STATEMENT BEFORE SUBMISSION
   // fprintf(stdout, "\n msh> ");
   fflush(stdout);
 }
+
 /* argk - number of arguments */
 /* argv - argument vector from command line */
 /* envp - environment pointer */
 int main(int argk, char *argv[], char *envp[]) {
   int frkRtnVal; /* value returned by fork sys call */
-  struct background_jobs
-      bg_jobs[NV];      /* an array to store all background jobs until done */
-  int num_jobs = 0;     /* number of background jobs */
   int background_tasks; /* number of background tasks*/
   char *v[NV];          /* array of pointers to command line tokens
                          */
   char *sep = " \t\n";  /* command line token separators */
   int i;                /* parse index */
+  signal(SIGCHLD, sig_handler);
   /* prompt for and process one command line at a time */
   while (1) { /* do Forever */
     prompt();
@@ -123,15 +145,5 @@ int main(int argk, char *argv[], char *envp[]) {
         break;
       }
     } /* switch */
-    pid_t job_finished;
-    while ((job_finished = waitpid(-1, &stat, WNOHANG)) > 0) {
-      for (int j = 0; j < num_jobs; ++j) {
-        if (bg_jobs[j].pid_num == job_finished) {
-          bg_jobs[j].job_status = 0;
-          printf("[%d]+ Done                 %s\n", bg_jobs[j].job_id,
-                 bg_jobs[j].cmd);
-        }
-      }
-    }
   } /* while */
 } /* main */
