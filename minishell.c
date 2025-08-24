@@ -140,6 +140,7 @@ int main(int argk, char *argv[], char *envp[]) {
         /* if statement runs waitpid if it is a foreground task */
         if (background_tasks == 0) {
           waitpid(frkRtnVal, &stat, 0);
+          perror("waitpid");
         } else if (background_tasks == 1) { /* otherwise if it is a background task then it adds the neccasary information to the bg_jobs */
           bg_jobs[num_jobs].job_id = num_jobs + 1; /* increase number of jobs*/
           bg_jobs[num_jobs].pid_num = frkRtnVal; /* save the job PID number*/
